@@ -1,6 +1,7 @@
 import generateBgColor from '@/utils/generateBgColor';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
+import ImageFallback from '@/components/ImageFallBack';
 
 export default function PokemonCard({ pokemon }: { pokemon: any }) {
   return (
@@ -22,8 +23,14 @@ export default function PokemonCard({ pokemon }: { pokemon: any }) {
         }}
         className="absolute z-0 opacity-10"
       />
-
-      <Image
+      <ImageFallback
+        fallbackSrc="/pokemon-ball.svg"
+        src={pokemon.ThumbnailImage}
+        width={150}
+        height={150}
+        alt={pokemon.ThumbnailAltText}
+      />
+      {/* <Image
         src={pokemon.ThumbnailImage}
         width={150}
         height={150}
@@ -32,24 +39,32 @@ export default function PokemonCard({ pokemon }: { pokemon: any }) {
           return `${src}?w=${width}&q=${quality || 75}`;
         }}
         className="drop-shadow-lg"
-      />
+      /> */}
       <div className="flex items-center absolute bottom-3 z-10">
         <Badge className="z-10 h-fit" variant="secondary">
           {pokemon.ThumbnailAltText}
         </Badge>
         {pokemon.type.map((type: string) => {
           return (
-            <Image
-              src={`/type/${type}.svg`}
+            <ImageFallback
               width={50}
-              height={50}
-              alt={pokemon.ThumbnailAltText}
-              loader={({ src, width, quality }) => {
-                return `${src}?w=${width}&q=${quality || 75}`;
-              }}
-              className="drop-shadow-xl"
               key={type}
+              height={50}
+              src={`/type/${type}.svg`}
+              fallbackSrc="/pokemon-ball.svg"
+              alt={pokemon.ThumbnailAltText}
             />
+            // <Image
+            //   src={`/type/${type}.svg`}
+            //   width={50}
+            //   height={50}
+            //   alt={pokemon.ThumbnailAltText}
+            //   loader={({ src, width, quality }) => {
+            //     return `${src}?w=${width}&q=${quality || 75}`;
+            //   }}
+            //   className="drop-shadow-xl"
+            //   key={type}
+            // />
           );
         })}
       </div>
