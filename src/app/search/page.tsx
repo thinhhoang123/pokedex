@@ -9,9 +9,9 @@ export default function PokedexSearch() {
       <div className="flex flex-col gap-10 items-center pt-20">
         <Image src="/pokedex.svg" width={350} height={350} alt="pokedex" />
         <SearchInput />
-        {/* <Suspense fallback={<>Loading ...</>}> */}
-        <PokedexListView />
-        {/* </Suspense> */}
+        <Suspense fallback={<>Loading ...</>}>
+          <PokedexListView />
+        </Suspense>
       </div>
     </>
   );

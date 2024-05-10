@@ -5,9 +5,6 @@ import Image from 'next/image';
 import { useDebouncedCallback } from 'use-debounce';
 
 export default function SearchInput() {
-  // const searchParams = useSearchParams();
-  // const pathname = usePathname();
-  // const { replace } = useRouter();
   const searchPokemon = useStoreSearchPokemon((state) => state.searchPokemon);
 
   const handleSearch = useDebouncedCallback((value: string) => {
@@ -15,7 +12,7 @@ export default function SearchInput() {
   }, 500);
 
   return (
-    <div className="sticky h-12 sm:w-full md:w-1/2 top-5 z-10">
+    <div className="sticky h-12 sm:w-full md:w-1/2 top-5 z-50">
       <Image
         src="/pokemon-ball.svg"
         width={20}
