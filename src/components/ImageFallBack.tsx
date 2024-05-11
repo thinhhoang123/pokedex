@@ -4,16 +4,18 @@ import { useEffect, useState } from 'react';
 
 export default function ImageFallback({
   src,
-  fallbackSrc,
+  fallbackSrc = '/pokemon-ball.svg',
   width = 50,
   height = 50,
   alt = 'image',
+  className,
 }: {
   src: string;
-  fallbackSrc: string;
+  fallbackSrc?: string;
   width: number;
   height: number;
   alt: string;
+  className?: string;
 }) {
   const [imgSrc, set_imgSrc] = useState(src);
 
@@ -23,14 +25,14 @@ export default function ImageFallback({
 
   return (
     <Image
+      className={className}
       src={imgSrc}
-      onLoadingComplete={(result) => {
-        if (result.naturalWidth === 0) {
+      onLoad={(e: any) => {
+        if (e.target.naturalWidth === 0) {
           // Broken image
           set_imgSrc(fallbackSrc);
         }
       }}
-      priority={true}
       onError={() => {
         set_imgSrc(fallbackSrc);
       }}
@@ -40,6 +42,7 @@ export default function ImageFallback({
       loader={({ src, width, quality }) => {
         return `${src}?w=${width}&q=${quality || 75}`;
       }}
+      loading="lazy"
     />
   );
 }

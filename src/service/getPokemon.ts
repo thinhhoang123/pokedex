@@ -4,5 +4,10 @@ const getAllPokemon = async () => {
   const data = await response.json();
   return data;
 };
-
-export { getAllPokemon };
+const getPokemonById = async (id: string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/pokemon/${id}`);
+  if (!response.ok) return '';
+  const data = await response.json();
+  return data;
+};
+export { getAllPokemon, getPokemonById };

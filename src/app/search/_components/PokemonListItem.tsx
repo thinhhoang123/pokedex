@@ -44,9 +44,9 @@ export default function PokemonListItem({
           return <PokemonCard pokemon={pokemon} key={pokemon.id} />;
         })}
       </div>
-      {loadPokemon < maxPokemon ? (
+      {!query && loadPokemon < maxPokemon ? (
         <Button
-          className="mb-2 rounded-full "
+          className="mb-2 rounded-full"
           onClick={() =>
             setLoadPokemon((prev) => {
               return prev + numberOfPokemonEachLoad;

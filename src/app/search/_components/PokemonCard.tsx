@@ -1,49 +1,43 @@
 import generateBgColor from '@/utils/generateBgColor';
-import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import ImageFallback from '@/components/ImageFallBack';
+import { useRouter } from 'next/navigation';
 
 export default function PokemonCard({ pokemon }: { pokemon: any }) {
+  const route = useRouter();
   return (
     <div
-      className={`relative rounded-md aspect-square flex flex-col items-center justify-center cursor-pointer ${generateBgColor(
+      className={`relative rounded-md aspect-square flex flex-col items-center justify-center cursor-pointer group ${generateBgColor(
         pokemon.type[0]
       )}`}
+      onClick={() => route.push(`/pokemon/${pokemon.id}`)}
     >
+      {/* Number */}
       <p className="absolute top-2 left-2 text-gray-50 font-bold text-6xl opacity-40 drop-shadow-sm">
         #{pokemon.id}
       </p>
-      <Image
+      {/* Type Background */}
+      <ImageFallback
         src={`/typeIcon/${pokemon.type[0]}.svg`}
         width={250}
         height={250}
         alt={pokemon.ThumbnailAltText}
-        loader={({ src, width, quality }) => {
-          return `${src}?w=${width}&q=${quality || 75}`;
-        }}
         className="absolute z-0 opacity-10"
       />
+      {/* Pokemon Image */}
       <ImageFallback
-        fallbackSrc="/pokemon-ball.svg"
         src={pokemon.ThumbnailImage}
         width={150}
         height={150}
         alt={pokemon.ThumbnailAltText}
+        className="drop-shadow-xl group-hover:scale-125 transition-transform duration-300 ease-in-out z-10"
       />
-      {/* <Image
-        src={pokemon.ThumbnailImage}
-        width={150}
-        height={150}
-        alt={pokemon.ThumbnailAltText}
-        loader={({ src, width, quality }) => {
-          return `${src}?w=${width}&q=${quality || 75}`;
-        }}
-        className="drop-shadow-lg"
-      /> */}
       <div className="flex items-center absolute bottom-3 z-10">
+        {/* Pokemon name */}
         <Badge className="z-10 h-fit" variant="secondary">
           {pokemon.ThumbnailAltText}
         </Badge>
+        {/* Pokemon Types */}
         {pokemon.type.map((type: string) => {
           return (
             <ImageFallback
@@ -51,20 +45,9 @@ export default function PokemonCard({ pokemon }: { pokemon: any }) {
               key={type}
               height={50}
               src={`/type/${type}.svg`}
-              fallbackSrc="/pokemon-ball.svg"
               alt={pokemon.ThumbnailAltText}
+              className="drop-shadow-xl"
             />
-            // <Image
-            //   src={`/type/${type}.svg`}
-            //   width={50}
-            //   height={50}
-            //   alt={pokemon.ThumbnailAltText}
-            //   loader={({ src, width, quality }) => {
-            //     return `${src}?w=${width}&q=${quality || 75}`;
-            //   }}
-            //   className="drop-shadow-xl"
-            //   key={type}
-            // />
           );
         })}
       </div>
